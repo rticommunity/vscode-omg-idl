@@ -1,0 +1,25 @@
+{
+    "name": "omg-idl-lang",
+    "displayName": "Interface Definition Lang",
+    "description": "Syntax highlighting for OMG IDL language",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.33.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "omg.idl",
+            "aliases": ["OMG IDL", "omg.idl"],
+            "extensions": [".idl"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "omg.idl",
+            "scopeName": "source.omg.idl",
+            "path": "./syntaxes/omg.idl.tmLanguage.json"
+        }]
+    }
+}
