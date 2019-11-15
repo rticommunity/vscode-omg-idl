@@ -47,7 +47,7 @@
         },
         "module_dcl": {
             "name": "meta.module.omg.idl",
-            "begin": "^\\s*(module)\\s+(\\w+)\\s*(\\{)",
+            "begin": "\\s*(module)\\s+(\\w+)\\s*(\\{)",
             "end": "\\}",
             "beginCaptures": {
                 "1": { "name": "keyword.control.omg.idl"},
@@ -348,11 +348,12 @@
         },
         "struct_def": {
             "name": "meta.storage.struct.omg.idl",
-            "begin": "(struct)\\s+(\\w+)\\s*\\{",
+            "begin": "(struct)\\s+(\\w+)\\s*((\\:)\\s+(\\w+)){0,1}\\s*\\{",
             "end": "\\}",
             "beginCaptures": {
                 "1": {"name": "storage.type.class.omg.idl"},
-                "2": {"name": "entity.name.type.omg.idl"}
+                "2": {"name": "entity.name.type.omg.idl"},
+                "5": {"name": "entity.name.type.omg.idl"}
             },
             "patterns": [
                 {"include": "#member"},
@@ -406,7 +407,7 @@
         },
         "case_label": {
             "name": "meta.storage.union.case.omg.idl",
-            "begin": "\\s+(case|default)\\b",
+            "begin": "\\b(case|default)\\b",
             "end": ":",
             "beginCaptures": {
                 "1": {"name": "keyword.control.omg.idl"}
