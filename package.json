@@ -2,7 +2,7 @@
     "name": "omg-idl-lang",
     "displayName": "Interface Definition Lang",
     "description": "Syntax highlighting for OMG IDL language",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "engines": {
         "vscode": "^1.33.0"
     },

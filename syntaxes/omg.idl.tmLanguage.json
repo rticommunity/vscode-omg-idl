@@ -184,50 +184,64 @@
             "patterns": [
                 {"include": "#signed_short_int"},
                 {"include": "#signed_long_int"},
-                {"include": "#signed_longlong_int"}
+                {"include": "#signed_longlong_int"},
+                {"include": "#signed_tiny_int"}
             ]
         },
         "signed_short_int": {
             "patterns": [{
                 "name": "storage.type.primitive.omg.idl",
-                "match": "\\b(short)\\b"
+                "match": "\\b(short|int16)\\b"
             }]
         },
         "signed_long_int": {
             "patterns": [{
                 "name": "storage.type.primitive.omg.idl",
-                "match": "\\b(long)\\b"
+                "match": "\\b(long|int32)\\b"
             }]
         },
         "signed_longlong_int": {
             "patterns": [{
                 "name": "storage.type.primitive.omg.idl",
-                "match": "\\b(long long)\\b"
+                "match": "\\b(long long|int64)\\b"
+            }]
+        },
+        "signed_tiny_int": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(int8)\\b"
             }]
         },
         "unsigned_int": {
             "patterns": [
                 {"include": "#unsigned_short_int"},
                 {"include": "#unsigned_long_int"},
-                {"include": "#unsigned_longlong_int"}
+                {"include": "#unsigned_longlong_int"},
+                {"include": "#unsigned_tiny_int"}
             ]
         },
         "unsigned_short_int": {
             "patterns": [{
                 "name": "storage.type.primitive.omg.idl",
-                "match": "\\b(unsigned short)\\b"
+                "match": "\\b(unsigned short|uint16)\\b"
             }]
         },
         "unsigned_long_int": {
             "patterns": [{
                 "name": "storage.type.primitive.omg.idl",
-                "match": "\\b(unsigned long)\\b"
+                "match": "\\b(unsigned long|uint32)\\b"
             }]
         },
         "unsigned_longlong_int": {
             "patterns": [{
                 "name": "storage.type.primitive.omg.idl",
-                "match": "\\b(unsigned long long)\\b"
+                "match": "\\b(unsigned long long|uint64)\\b"
+            }]
+        },
+        "unsigned_tiny_int": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(uint8)\\b"
             }]
         },
         "char_type": {
