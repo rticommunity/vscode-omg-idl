@@ -1,567 +1,568 @@
 {
-	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-	"name": "OMG IDL",
-	"patterns": [
-		{"include": "#module_dcl"},
-		{"include": "#block_comments"},
-		{"include": "#annotation_comment"},
-		{"include": "#single_line_comments"},
-		{"include": "#annotation_appl"},
-		{"include": "#type_dcl"},
-		{"include": "#const_dcl"},
-		{"include": "#value_dcl"},
-		{"include": "#annotation_appl"}
-	],
-	"repository": {
-		"block_comments": {
-			"name": "comment.block.omg.idl",
-			"begin": "/\\*",
-			"end": "\\*/",
-			"captures": [
-				{
-					"0": { "name": "comment.block.omg.idl"} 
-				}
-			],
-			"patterns": [
-				{
-					"name": "constant.character.escape.omg.idl",
-					"match": "\\\\."
-				}
-			]
-		},
-		"single_line_comments": {
-			"name": "comment.single.omg.idl",
-			"begin": "//",
-			"end": "$",
-			"captures": [
-				{
-					"0": { "name": "comment.line.double-slash"} 
-				}
-			],
-			"patterns": [
-				{
-					"name": "constant.character.escape.omg.idl",
-					"match": "\\\\."
-				}
-			]
-		},
-		"module_dcl": {
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "OMG IDL",
+    "patterns": [
+        {"include": "#module_dcl"},
+        {"include": "#block_comments"},
+        {"include": "#annotation_comment"},
+        {"include": "#single_line_comments"},
+        {"include": "#annotation_appl"},
+        {"include": "#type_dcl"},
+        {"include": "#const_dcl"},
+        {"include": "#value_dcl"},
+        {"include": "#annotation_appl"}
+    ],
+    "repository": {
+        "block_comments": {
+            "name": "comment.block.omg.idl",
+            "begin": "/\\*",
+            "end": "\\*/",
+            "captures": [
+                {
+                    "0": { "name": "comment.block.omg.idl"}
+                }
+            ],
+            "patterns": [
+                {
+                    "name": "constant.character.escape.omg.idl",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "single_line_comments": {
+            "name": "comment.single.omg.idl",
+            "begin": "//",
+            "end": "$",
+            "captures": [
+                {
+                    "0": { "name": "comment.line.double-slash"}
+                }
+            ],
+            "patterns": [
+                {
+                    "name": "constant.character.escape.omg.idl",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "module_dcl": {
             "name": "meta.module.omg.idl",
             "begin": "^\\s*(module)\\s+(\\w+)\\s*(\\{)",
             "end": "\\}",
             "beginCaptures": {
-				"1": { "name": "keyword.control.omg.idl"},
-				"2": { "name": "entity.name.type.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#module_dcl"},
-				{"include": "#block_comments"},
-				{"include": "#annotation_comment"},
-				{"include": "#single_line_comments"},
-				{"include": "#annotation_appl"},
-				{"include": "#type_dcl"},
-				{"include": "#const_dcl"},
-				{"include": "#value_dcl"}
-			]
-		},
-		"const_dcl": {
-			"name": "meta.declaration.const.omg.idl",
-			"begin": "(const)\\s+(\\w+)(\\:\\:\\w+)*\\s+(\\w+)\\s*=",
-			"end": ";",
-			"beginCaptures": {
-				"1": { "name": "storage.modifier.const.omg.idl"},
-				"2": {
-					"patterns": [
-						{"include": "#const_type"}
-					]		
-				},
-				"3": {},
-				"4": {"name": "entity.name.omg.idl"}
-			},
-			"patterns": [
-				{
-					"name": "constant.numeric.omg.idl",
-					"match": "\\d+"	
-				},
-				{"include": "#string_literal"}
-			]
-		},
-		"const_type": {
-			"patterns": [
-				{"include": "#integer_type"},
-				{"include": "#floating_pt_type"},
-				{"include": "#fixed_pt_const_type"},
-				{"include": "#char_type"},
-				{"include": "#wide_char_type"},
-				{"include": "#boolean_type"},
-				{"include": "#octet_type"},
-				{"include": "#string_type"},
-				{"include": "#string_type_unbounded"}
-			]
-		},
-		"literal": {
-			"patterns": [
-				{"include": "#integer_literal"},
-				{"include": "#floating_pt_literal"},
-				{"include": "#fixed_pt_literal"},
-				{"include": "#character_literal"},
-				{"include": "#wide_character_literal"},
-				{"include": "#boolean_literal"},
-				{"include": "#string_literal"}
-			]
-		},
-		"integer_literal": {
-			"patterns": [{
-				"name": "constant.numeric.omg.idl",
-				"match": "\\b(\\d+|0x\\h+)\\b"
-			}]
-		},
-		"boolean_literal": {
-			"patterns": [{
-				"name": "constant.language.omg.idl",
-				"match": "\\b(TRUE|FALSE)\\b"
-			}]
-		},
-		"positive_int_const": {
-			"patterns": [{
-				"name": "constant.numeric.omg.idl",
-				"match": "(\\d+)"
-			}]
-		},
-		"string_literal": {
-			"name": "string.quoted.double.omg.idl",
-			"begin": "\"",
-			"end": "\"",
-			"patterns": [
-				{
-					"name": "constant.character.escape.omg.idl",
-					"match": "\\\\."
-				}
-			]
-		},
-		"type_dcl": {
-			"patterns": [
-				{"include": "#constr_type_dcl"},
-				{"include": "#typedef_dcl"}
-			]
-		},
-		"type_spec": {
-			"patterns": [
-				{"include": "#simple_type_spec"}
-			]
-		},
-		"simple_type_spec": {
-			"patterns": [
-				{"include": "#base_type_spec"},
-				{"include": "#template_type_spec"}
-			]
-		},
-		"base_type_spec": {
-			"patterns": [
-				{"include": "#integer_type"},
-				{"include": "#floating_pt_type"},
-				{"include": "#char_type"},
-				{"include": "#wide_char_type"},
-				{"include": "#boolean_type"},
-				{"include": "#octet_type"}
-			]
-		},
-		"floating_pt_type": {
-			"patterns": [
-				{
-					"name": "storage.type.primitive.omg.idl",
-					"match": "\\b(float|double|long double)\\b"
-				}
-			]
-		},
-		"integer_type": {
-			"patterns": [
-				{"include": "#signed_int"},
-				{"include": "#unsigned_int"}
-			]
-		},
-		"signed_int": {
-			"patterns": [
-				{"include": "#signed_short_int"},
-				{"include": "#signed_long_int"},
-				{"include": "#signed_longlong_int"}
-			]
-		},
-		"signed_short_int": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(short)\\b"
-			}]
-		},
-		"signed_long_int": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(long)\\b"
-			}]
-		},
-		"signed_longlong_int": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(long long)\\b"
-			}]
-		},
-		"unsigned_int": {
-			"patterns": [
-				{"include": "#unsigned_short_int"},
-				{"include": "#unsigned_long_int"},
-				{"include": "#unsigned_longlong_int"}
-			]
-		},
-		"unsigned_short_int": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(unsigned short)\\b"
-			}]
-		},
-		"unsigned_long_int": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(unsigned long)\\b"
-			}]
-		},
-		"unsigned_longlong_int": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(unsigned long long)\\b"
-			}]
-		},
-		"char_type": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(char)\\b"
-			}]
-		},		
-		"wide_char_type": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(wchar)\\b"
-			}]
-		},
-		"boolean_type": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(boolean)\\b"
-			}]
-		},
-		"octet_type": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(octet)\\b"
-			}]
-		},
-		"template_type_spec": {
-			"patterns": [
-				{"include": "#sequence_type"},
-				{"include": "#string_type"},
-				{"include": "#string_type_unbounded"},
-				{"include": "#fixed_pt_type"}
-			]
-		},
-		"sequence_type": {
-			"name": "meta.storage.sequence.omg.idl",
-			"begin": "\\b(sequence)<",
-			"end": ">",
-			"beginCaptures": {
-				"1": {"name": "storage.type.sequence.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#type_spec"},
-				{"include": "#positive_int_const"}
-			]
-		},
-		"string_type_unbounded": {
-			"patterns": [{
-				"name": "storage.type.string.omg.idl",
-				"match": "\\b(w{0,1}string)\\b"
-			}]
-		},
-		"string_type": {
-			"name": "meta.storage.string.omg.idl",
-			"begin": "\\b(w{0,1}string)<",
-			"end": ">",
-			"beginCaptures": {
-				"1": {"name": "storage.type.string.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#positive_int_const"}
-			]
-		},
-		"fixed_pt_type": {
-			"name": "meta.storage.fixed.point.omg.idl",
-			"begin": "(fixed\\s*)<(\\d+)\\s*\\,\\s*(\\d+)",
-			"end": ">",
-			"beginCaptures": {
-				"1": {"name": "storage.type.fixed.point.omg.idl"},
-				"2": {
-					"patterns": [{"include": "#positive_int_const"}]
-				},
-				"3": {
-					"patterns": [{"include": "#positive_int_const"}]
-				}
-			},
-			"patterns": []
-		},
-		"fixed_pt_const_type": {
-			"patterns": [{
-				"name": "storage.type.primitive.omg.idl",
-				"match": "\\b(fixed)\\b"
-			}]
-		},
-		"annotation_comment": {
-			"name": "annotation.omg.idl",
-			"patterns": [{
-				"name": "storage.type.annotation.omg.idl",
-				"match": "//@\\w+.*$"
-			}]
-			
-		},
-		"constr_type_dcl": {
-			"patterns": [
-				{"include": "#struct_dcl"},
-				{"include": "#union_dcl"},
-				{"include": "#enum_dcl"}
-			]
-		},
-		"struct_dcl": {
-			"patterns": [{
-				"include": "#struct_def"
-			}]
-		},
-		"struct_def": {
-			"name": "meta.storage.struct.omg.idl",
-			"begin": "(struct)\\s+(\\w+)\\s*\\{",
-			"end": "\\}",
-			"beginCaptures": {
-				"1": {"name": "storage.type.class.omg.idl"},
-				"2": {"name": "entity.name.type.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#member"},
-				{"include": "#single_line_comments"},
-				{"include": "#block_comments"}
-			]
-		},
-		"member": {
-			"patterns" : [
-				{"include": "#annotation_comment"},
-				{"include": "#type_spec"},
-				{"include": "#declarator"}
-			]
-		},
-		"declarator": {
-			"patterns": [
-				{"include": "#type_declarator"},
-				{"include": "#array_declarator"}
-			]
-		},
-		"union_dcl": {
-			"patterns" : [
-				{"include": "#union_def"},
-				{"include": "#union_forward_dcl"}
-			]
-		},
-		"union_def": {
-			"name": "meta.storage.union.omg.idl",
-			"begin": "(union)\\s+(\\w+)\\s+(switch)\\s*\\((\\w+)\\)\\s*\\{",
-			"end": "\\};",
-			"beginCaptures": {
-				"1": {"name": "storage.type.union.omg.idl"},
-				"2": {"name": "entity.name.type.omg.idl"},
-				"3": {"name": "keyword.control.omg.idl"},
-				"4": {"name": "variable.parameter.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#annotation_comment"},
-				{"include": "#single_line_comments"},
-				{"include": "#block_comments"},
-				{"include": "#switch_body"}
-			]
-		},
-		"switch_body": {
-			"patterns": [
-				{"include": "#case_label"},
-				{"include": "#element_spec"},
-				{"include": "#annotation_comment"}
-				
-			]
-		},
-		"case_label": {
-			"name": "meta.storage.union.case.omg.idl",
-			"begin": "\\s+(case|default)\\b",
-			"end": ":",
-			"beginCaptures": {
-				"1": {"name": "keyword.control.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#boolean_literal"},
-				{
-					"name": "constant.numeric.omg.idl",
-					"match": "\\d+"
-				}
-			]
-		},
-		"element_spec": {
-			"patterns": [
-				{"include": "#type_spec"},
-				{"include": "#declarator"}
-			]
-		},
-		"union_forward_dcl": {
-			"patterns": [
-				{
-					"match": "(union)",
-					"name": "storage.type.union.omg.idl"
-				}
-			]
-		},
-		"enum_dcl": {
-			"name": "meta.enum.omg.idl",
-			"begin": "\\b(enum)\\b\\s+(\\w+)\\s*\\{",
-			"end": "}",
-			"beginCaptures": {
-				"1": {"name": "storage.type.enum.omg.idl"},
-				"2": {"name": "entity.name.type.idl"}
-			},
-			"patterns": [
-				{"include": "#enumerator"}
-			]
-		},
-		"enumerator": {
-			"patterns": [
-				{"include": "#annotation_appl"},
-				{"include": "#integer_literal"},
-				{"include": "#identifier"},
-				{"include": "#block_comments"},
-				{"include": "#single_line_comments"},
-				{"include": "#annotation_comment"}
-			]
-		},
-		"array_declarator": {
-			"name": "meta.array.omg.idl",
-			"begin": "(\\[)(\\d+)",
-			"end": "(\\])",
-			"beginCaptures": {
-				"1": {"name": "punctuation.definition.bracket.omg.idl"},
-				"2": {"name": "constant.numeric.omg.idl"}
-			},
-			"endCaptures": {
-				"1": {"name": "punctuation.definition.bracket.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#fixed_array_size"}
-			]
-		},
-		"fixed_array_size": {
-			"name": "meta.array_size.omg.idl",
-			"begin": "(\\[)(\\d+)",
-			"end": "(\\])",
-			"beginCaptures": {
-				"1": {"name": "punctuation.definition.bracket.omg.idl"},
-				"2": {"name": "constant.numeric.omg.idl"}
-			},
-			"endCaptures": {
-				"1": {"name": "punctuation.definition.bracket.omg.idl"}
-			},
-			"patterns": []
-		},
-		"typedef_dcl": {
-			"name": "meta.typedef.omg.idl",
-			"begin": "\\b(typedef)\\b",
-			"end": "$",
-			"beginCaptures": {
-				"1": {"name": "storage.type.typedef.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#type_declarator"},
-				{"include": "#annotation_comment"}
-			]
+                "1": { "name": "keyword.control.omg.idl"},
+                "2": { "name": "entity.name.type.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#module_dcl"},
+                {"include": "#block_comments"},
+                {"include": "#annotation_comment"},
+                {"include": "#single_line_comments"},
+                {"include": "#annotation_appl"},
+                {"include": "#type_dcl"},
+                {"include": "#const_dcl"},
+                {"include": "#value_dcl"}
+            ]
+        },
+        "const_dcl": {
+            "name": "meta.declaration.const.omg.idl",
+            "begin": "(const)\\s+(\\w+)(\\:\\:\\w+)*\\s+(\\w+)\\s*=",
+            "end": ";",
+            "beginCaptures": {
+                "1": { "name": "storage.modifier.const.omg.idl"},
+                "2": {
+                    "patterns": [
+                        {"include": "#const_type"}
+                    ] 
+                },
+                "3": {},
+                "4": {"name": "entity.name.omg.idl"}
+            },
+            "patterns": [
+                {
+                    "name": "constant.numeric.omg.idl",
+                    "match": "\\d+" 
+                },
+                {"include": "#string_literal"}
+            ]
+        },
+        "const_type": {
+            "patterns": [
+                {"include": "#integer_type"},
+                {"include": "#floating_pt_type"},
+                {"include": "#fixed_pt_const_type"},
+                {"include": "#char_type"},
+                {"include": "#wide_char_type"},
+                {"include": "#boolean_type"},
+                {"include": "#octet_type"},
+                {"include": "#string_type"},
+                {"include": "#string_type_unbounded"}
+            ]
+        },
+        "literal": {
+            "patterns": [
+                {"include": "#integer_literal"},
+                {"include": "#floating_pt_literal"},
+                {"include": "#fixed_pt_literal"},
+                {"include": "#character_literal"},
+                {"include": "#wide_character_literal"},
+                {"include": "#boolean_literal"},
+                {"include": "#string_literal"}
+            ]
+        },
+        "integer_literal": {
+            "patterns": [{
+                "name": "constant.numeric.omg.idl",
+                "match": "\\b(\\d+|0x\\h+)\\b"
+            }]
+        },
+        "boolean_literal": {
+            "patterns": [{
+                "name": "constant.language.omg.idl",
+                "match": "\\b(TRUE|FALSE)\\b"
+            }]
+        },
+        "positive_int_const": {
+            "patterns": [{
+                "name": "constant.numeric.omg.idl",
+                "match": "(\\d+)"
+            }]
+        },
+        "string_literal": {
+            "name": "string.quoted.double.omg.idl",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.omg.idl",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "type_dcl": {
+            "patterns": [
+                {"include": "#constr_type_dcl"},
+                {"include": "#typedef_dcl"}
+            ]
+        },
+        "type_spec": {
+            "patterns": [
+                {"include": "#simple_type_spec"}
+            ]
+        },
+        "simple_type_spec": {
+            "patterns": [
+                {"include": "#base_type_spec"},
+                {"include": "#template_type_spec"}
+            ]
+        },
+        "base_type_spec": {
+            "patterns": [
+                {"include": "#integer_type"},
+                {"include": "#floating_pt_type"},
+                {"include": "#char_type"},
+                {"include": "#wide_char_type"},
+                {"include": "#boolean_type"},
+                {"include": "#octet_type"}
+            ]
+        },
+        "floating_pt_type": {
+            "patterns": [
+                {
+                    "name": "storage.type.primitive.omg.idl",
+                    "match": "\\b(float|double|long double)\\b"
+                }
+            ]
+        },
+        "integer_type": {
+            "patterns": [
+                {"include": "#signed_int"},
+                {"include": "#unsigned_int"}
+            ]
+        },
+        "signed_int": {
+            "patterns": [
+                {"include": "#signed_short_int"},
+                {"include": "#signed_long_int"},
+                {"include": "#signed_longlong_int"}
+            ]
+        },
+        "signed_short_int": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(short)\\b"
+            }]
+        },
+        "signed_long_int": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(long)\\b"
+            }]
+        },
+        "signed_longlong_int": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(long long)\\b"
+            }]
+        },
+        "unsigned_int": {
+            "patterns": [
+                {"include": "#unsigned_short_int"},
+                {"include": "#unsigned_long_int"},
+                {"include": "#unsigned_longlong_int"}
+            ]
+        },
+        "unsigned_short_int": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(unsigned short)\\b"
+            }]
+        },
+        "unsigned_long_int": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(unsigned long)\\b"
+            }]
+        },
+        "unsigned_longlong_int": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(unsigned long long)\\b"
+            }]
+        },
+        "char_type": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(char)\\b"
+            }]
+        }, 
+        "wide_char_type": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(wchar)\\b"
+            }]
+        },
+        "boolean_type": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(boolean)\\b"
+            }]
+        },
+        "octet_type": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(octet)\\b"
+            }]
+        },
+        "template_type_spec": {
+            "patterns": [
+                {"include": "#sequence_type"},
+                {"include": "#string_type"},
+                {"include": "#string_type_unbounded"},
+                {"include": "#fixed_pt_type"}
+            ]
+        },
+        "sequence_type": {
+            "name": "meta.storage.sequence.omg.idl",
+            "begin": "\\b(sequence)<",
+            "end": ">",
+            "beginCaptures": {
+                "1": {"name": "storage.type.sequence.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#type_spec"},
+                {"include": "#positive_int_const"}
+            ]
+        },
+        "string_type_unbounded": {
+            "patterns": [{
+                "name": "storage.type.string.omg.idl",
+                "match": "\\b(w{0,1}string)\\b"
+            }]
+        },
+        "string_type": {
+            "name": "meta.storage.string.omg.idl",
+            "begin": "\\b(w{0,1}string)<",
+            "end": ">",
+            "beginCaptures": {
+                "1": {"name": "storage.type.string.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#positive_int_const"}
+            ]
+        },
+        "fixed_pt_type": {
+            "name": "meta.storage.fixed.point.omg.idl",
+            "begin": "(fixed\\s*)<(\\d+)\\s*\\,\\s*(\\d+)",
+            "end": ">",
+            "beginCaptures": {
+                "1": {"name": "storage.type.fixed.point.omg.idl"},
+                "2": {
+                    "patterns": [{"include": "#positive_int_const"}]
+                },
+                "3": {
+                    "patterns": [{"include": "#positive_int_const"}]
+                }
+            },
+            "patterns": []
+        },
+        "fixed_pt_const_type": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(fixed)\\b"
+            }]
+        },
+        "annotation_comment": {
+            "name": "annotation.omg.idl",
+            "patterns": [{
+                "name": "storage.type.annotation.omg.idl",
+                "match": "//@\\w+.*$"
+            }]
 
-		},
-		"type_declarator": {
-			"patterns": [
-				{"include": "#annotation_appl"},
-				{"include": "#simple_type_spec"},
-				{"include": "#array_declarator"},
-				{"include": "#template_type_spec"}
-			]
-		},
-		"value_dcl": {
-			"patterns": [
-				{"include": "#value_def"},
-				{"include": "#value_forward_dcl"}
-			]
-		},
-		"value_def": {
-			"name": "meta.valuetype.omg.idl",
-			"begin": "(valuetype)\\s+(\\w+)\\s*(.*)\\{",
-			"end": "\\};",
-			"beginCaptures": {
-				"1": {"name": "storage.type.class.omg.idl"},
-				"2": {"name": "entity.name.type.omg.idl"},
-				"3": {
-					"patterns": [
-						{"include": "#value_inheritance_spec_1"},
-						{"include": "#value_inheritance_spec_2"}
-					]
-				}
-			},
-			"patterns": [
-				{"include": "#block_comments"},
-				{"include": "#annotation_comment"},
-				{"include": "#single_line_comments"},
-				{"include": "#value_element"}
-			]
-		},
-		"value_inheritance_spec_1": {
-			"name": "meta.valuetype.inheritance.omg.idl",
-			"begin": "(\\:)\\s+",
-			"end": "(\\w+)",
-			"beginCaptures": {
-				"1": {"name": "storage.modifier.inherits.omg.idl"}
-			},
-			"patterns": []
-		},
-		"value_inheritance_spec_2": {
-			"patterns": [
-				{
-					"match": "\\b(supports)\\b",
-					"name": "storage.modifier.supports.omg.idl"
-				}
-			]
-		},
-		"value_element": {
-			"patterns": [
-				{"include": "#export"},
-				{"include": "#state_member"},
-				{"include": "#init_dcl"}
-			]
-		},
-		"state_member": {
-			"name": "meta.state_member.omg.idl",
-			"begin": "\\b(public|private)\\b",
-			"end": ";",
-			"beginCaptures": {
-				"1": {"name": "storage.modifier.visibility.omg.idl"}
-			},
-			"patterns": [
-				{"include": "#type_spec"},
-				{"include": "#declarator"}
-			]
-		},
-		"annotation_appl": {
-			"name": "annotation.omg.idl",
-			"patterns": [{
-				"name": "storage.type.annotation.omg.idl",
-				"match": "@\\w+(\\(.*\\)){0,1}"
-			}]
-		}
+        },
+        "constr_type_dcl": {
+            "patterns": [
+                {"include": "#struct_dcl"},
+                {"include": "#union_dcl"},
+                {"include": "#enum_dcl"}
+            ]
+        },
+        "struct_dcl": {
+            "patterns": [{
+                "include": "#struct_def"
+            }]
+        },
+        "struct_def": {
+            "name": "meta.storage.struct.omg.idl",
+            "begin": "(struct)\\s+(\\w+)\\s*\\{",
+            "end": "\\}",
+            "beginCaptures": {
+                "1": {"name": "storage.type.class.omg.idl"},
+                "2": {"name": "entity.name.type.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#member"},
+                {"include": "#single_line_comments"},
+                {"include": "#block_comments"}
+            ]
+        },
+        "member": {
+            "patterns" : [
+                {"include": "#annotation_comment"},
+                {"include": "#type_spec"},
+                {"include": "#declarator"}
+            ]
+        },
+        "declarator": {
+            "patterns": [
+                {"include": "#type_declarator"},
+                {"include": "#array_declarator"}
+            ]
+        },
+        "union_dcl": {
+            "patterns" : [
+                {"include": "#union_def"},
+                {"include": "#union_forward_dcl"}
+            ]
+        },
+        "union_def": {
+            "name": "meta.storage.union.omg.idl",
+            "begin": "(union)\\s+(\\w+)\\s+(switch)\\s*\\((\\w+)\\)\\s*\\{",
+            "end": "\\};",
+            "beginCaptures": {
+                "1": {"name": "storage.type.union.omg.idl"},
+                "2": {"name": "entity.name.type.omg.idl"},
+                "3": {"name": "keyword.control.omg.idl"},
+                "4": {"name": "variable.parameter.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#annotation_comment"},
+                {"include": "#single_line_comments"},
+                {"include": "#block_comments"},
+                {"include": "#switch_body"}
+            ]
+        },
+        "switch_body": {
+            "patterns": [
+                {"include": "#case_label"},
+                {"include": "#element_spec"},
+                {"include": "#annotation_comment"}
 
-		
-	},
-	"scopeName": "source.omg.idl"
+            ]
+        },
+        "case_label": {
+            "name": "meta.storage.union.case.omg.idl",
+            "begin": "\\s+(case|default)\\b",
+            "end": ":",
+            "beginCaptures": {
+                "1": {"name": "keyword.control.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#boolean_literal"},
+                {
+                    "name": "constant.numeric.omg.idl",
+                    "match": "\\d+"
+                }
+            ]
+        },
+        "element_spec": {
+            "patterns": [
+                {"include": "#type_spec"},
+                {"include": "#declarator"}
+            ]
+        },
+        "union_forward_dcl": {
+            "patterns": [
+                {
+                    "match": "(union)",
+                    "name": "storage.type.union.omg.idl"
+                }
+            ]
+        },
+        "enum_dcl": {
+            "name": "meta.enum.omg.idl",
+            "begin": "\\b(enum)\\b\\s+(\\w+)\\s*\\{",
+            "end": "}",
+            "beginCaptures": {
+                "1": {"name": "storage.type.enum.omg.idl"},
+                "2": {"name": "entity.name.type.idl"}
+            },
+            "patterns": [
+                {"include": "#enumerator"}
+            ]
+        },
+        "enumerator": {
+            "patterns": [
+                {"include": "#annotation_appl"},
+                {"include": "#integer_literal"},
+                {"include": "#identifier"},
+                {"include": "#block_comments"},
+                {"include": "#single_line_comments"},
+                {"include": "#annotation_comment"}
+            ]
+        },
+        "array_declarator": {
+            "name": "meta.array.omg.idl",
+            "begin": "(\\[)(\\d+)",
+            "end": "(\\])",
+            "beginCaptures": {
+                "1": {"name": "punctuation.definition.bracket.omg.idl"},
+                "2": {"name": "constant.numeric.omg.idl"}
+            },
+            "endCaptures": {
+                "1": {"name": "punctuation.definition.bracket.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#fixed_array_size"}
+            ]
+        },
+        "fixed_array_size": {
+            "name": "meta.array_size.omg.idl",
+            "begin": "(\\[)(\\d+)",
+            "end": "(\\])",
+            "beginCaptures": {
+                "1": {"name": "punctuation.definition.bracket.omg.idl"},
+                "2": {"name": "constant.numeric.omg.idl"}
+            },
+            "endCaptures": {
+                "1": {"name": "punctuation.definition.bracket.omg.idl"}
+            },
+            "patterns": []
+        },
+        "typedef_dcl": {
+            "name": "meta.typedef.omg.idl",
+            "begin": "\\b(typedef)\\b",
+            "end": "$",
+            "beginCaptures": {
+                "1": {"name": "storage.type.typedef.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#type_declarator"},
+                {"include": "#annotation_comment"}
+            ]
+
+        },
+        "type_declarator": {
+            "patterns": [
+                {"include": "#annotation_appl"},
+                {"include": "#simple_type_spec"},
+                {"include": "#array_declarator"},
+                {"include": "#template_type_spec"}
+            ]
+        },
+        "value_dcl": {
+            "patterns": [
+                {"include": "#value_def"},
+                {"include": "#value_forward_dcl"}
+            ]
+        },
+        "value_def": {
+            "name": "meta.valuetype.omg.idl",
+            "begin": "(valuetype)\\s+(\\w+)\\s*(.*)\\{",
+            "end": "\\};",
+            "beginCaptures": {
+                "1": {"name": "storage.type.class.omg.idl"},
+                "2": {"name": "entity.name.type.omg.idl"},
+                "3": {
+                    "patterns": [
+                        {"include": "#value_inheritance_spec_1"},
+                        {"include": "#value_inheritance_spec_2"}
+                    ]
+                }
+            },
+            "patterns": [
+                {"include": "#block_comments"},
+                {"include": "#annotation_comment"},
+                {"include": "#single_line_comments"},
+                {"include": "#value_element"}
+            ]
+        },
+        "value_inheritance_spec_1": {
+            "name": "meta.valuetype.inheritance.omg.idl",
+            "begin": "(\\:)\\s+",
+            "end": "(\\w+)",
+            "beginCaptures": {
+                "1": {"name": "storage.modifier.inherits.omg.idl"}
+            },
+            "patterns": []
+        },
+        "value_inheritance_spec_2": {
+            "patterns": [
+                {
+                    "match": "\\b(supports)\\b",
+                    "name": "storage.modifier.supports.omg.idl"
+                }
+            ]
+        },
+        "value_element": {
+            "patterns": [
+                {"include": "#export"},
+                {"include": "#state_member"},
+                {"include": "#init_dcl"}
+            ]
+        },
+        "state_member": {
+            "name": "meta.state_member.omg.idl",
+            "begin": "\\b(public|private)\\b",
+            "end": ";",
+            "beginCaptures": {
+                "1": {"name": "storage.modifier.visibility.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#type_spec"},
+                {"include": "#declarator"}
+            ]
+        },
+        "annotation_appl": {
+            "name": "annotation.omg.idl",
+            "patterns": [{
+                "name": "storage.type.annotation.omg.idl",
+                "match": "@\\w+(\\(.*\\)){0,1}"
+            }]
+        }
+
+
+    },
+    "scopeName": "source.omg.idl"
 }
+
