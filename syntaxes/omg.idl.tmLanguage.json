@@ -416,7 +416,7 @@
                 {"include": "#boolean_literal"},
                 {
                     "name": "constant.numeric.omg.idl",
-                    "match": "\\d+"
+                    "match": "\\b(\\d+)\\b"
                 }
             ]
         },
