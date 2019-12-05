@@ -1,5 +1,6 @@
 {
     "name": "omg-idl-lang",
+    "publisher": "RTI",
     "displayName": "Interface Definition Lang",
     "description": "Syntax highlighting for OMG IDL language",
     "version": "1.0.0",
@@ -21,5 +22,9 @@
             "scopeName": "source.omg.idl",
             "path": "./syntaxes/omg.idl.tmLanguage.json"
         }]
+    },
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/rticommunity/vscode-omg-idl.git"
     }
 }
