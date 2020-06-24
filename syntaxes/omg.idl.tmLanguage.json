@@ -142,7 +142,8 @@
         "type_dcl": {
             "patterns": [
                 {"include": "#constr_type_dcl"},
-                {"include": "#typedef_dcl"}
+                {"include": "#typedef_dcl"},
+                {"include": "#interface_def"}
             ]
         },
         "type_spec": {
@@ -572,11 +573,109 @@
             "name": "annotation.omg.idl",
             "patterns": [{
                 "name": "storage.type.annotation.omg.idl",
-                "match": "@\\w+(\\(.*\\)){0,1}"
+                "match": "@\\w+\\s*(\\(.*\\)){0,1}"
             }]
+        },
+        "interface_def": {
+            "name": "meta.storage.interface.omg.idl",
+            "begin": "(interface)\\s+(\\w+)\\s*\\{",
+            "end": "\\};",
+            "beginCaptures": {
+                "1": {"name": "storage.type.interface.omg.idl"},
+                "2": {"name": "entity.name.type.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#interface_body"},
+                {"include": "#single_line_comments"},
+                {"include": "#block_comments"}
+            ]
+        },
+        "interface_body": {
+            "patterns": [
+                {"include": "#attr_dcl"},
+                {"include": "#attr_dcl"},
+                {"include": "#op_dcl"}
+            ]
+        },
+        "op_dcl": {
+            "name": "meta.storage.operation.omg.idl",
+            "begin": "^\\s*((\\w+(<\\d+>){0,1})|\\w+::\\w+)\\s+\n*(\\w+)\\s*\\(",
+            "end": ";",
+            "beginCaptures": {
+                "2": {
+                    "patterns": [{"include": "#op_type_spec"}]
+                },
+                "4": {"name": "entity.name.function.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#raises_keyword"},
+                {"include": "#parameter_dcl"}]
+        },
+        "raises_keyword": {
+            "patterns": [{
+                "name": "keyword.control.raises.omg.idl",
+                "match": "\\b(raises|setraises|getraises)\\b"
+            }]
+        },
+        "void_type": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(void)\\b"
+            }]
+        },
+        "op_type_spec": {
+            "patterns": [
+                {"include": "#void_type"},
+                {"include": "#const_type"},
+                {"include": "#template_type_spec"}
+            ]
+        },
+        "parameter_dcl": {
+            "name": "meta.storage.operation.parameter.omg.idl",
+            "begin": "(in|out|inout)\\b",
+            "end": "(\\w+)\\s*(,|\\))",
+            "beginCaptures": {
+                "1": {"name": "storage.modifier.attribute.param.idl"}
+            },
+            "endCaptures": {
+                "1": {
+                    "patterns": [
+                        {"include": "#simple_declarator"}
+                    ]
+                }
+            },
+            "patterns": [
+                {"include": "#type_spec"}
+            ]
+        },
+        "param_attribute": {
+            "patterns": [{
+                "name": "storage.modifier.attribute.param.idl",
+                "match": "\\b(in|out|inout)\\b"
+            }]
+        },
+        "simple_declarator": {
+            "patterns": [{
+                "include": "#identifier"
+            }]
+        },
+        "identifier": {
+            "name": "variable.other",
+            "match": "\\w+"
+        },
+        "attr_dcl": {
+            "name": "meta.storage.attribute.omg.idl",
+            "begin": "\\b(readonly){0,1}\\b\\s*\\b(attribute)\\b",
+            "end": ";",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.readonly.omg.idl"},
+                "2": { "name": "keyword.control.attribute.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#type_spec"},
+                {"include": "#raises_keyword"}
+            ]
         }
-
-
     },
     "scopeName": "source.omg.idl"
 }
