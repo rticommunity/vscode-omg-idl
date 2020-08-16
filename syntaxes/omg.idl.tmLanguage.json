@@ -142,7 +142,10 @@
         "type_dcl": {
             "patterns": [
                 {"include": "#constr_type_dcl"},
-                {"include": "#typedef_dcl"}
+                {"include": "#typedef_dcl"},
+                {"include": "#interface_def"},
+                {"include": "#interface_forward_dcl"},
+                {"include": "#except_dcl"}
             ]
         },
         "type_spec": {
@@ -440,7 +443,7 @@
             "end": "}",
             "beginCaptures": {
                 "1": {"name": "storage.type.enum.omg.idl"},
-                "2": {"name": "entity.name.type.idl"}
+                "2": {"name": "entity.name.type.omg.idl"}
             },
             "patterns": [
                 {"include": "#enumerator"}
@@ -458,11 +461,12 @@
         },
         "array_declarator": {
             "name": "meta.array.omg.idl",
-            "begin": "(\\[)(\\d+)",
+            "begin": "(\\w+){0,1}(\\[)(\\d+)",
             "end": "(\\])",
             "beginCaptures": {
-                "1": {"name": "punctuation.definition.bracket.omg.idl"},
-                "2": {"name": "constant.numeric.omg.idl"}
+                "1": {"name": "variable.field.omg.idl"},
+                "2": {"name": "punctuation.definition.bracket.omg.idl"},
+                "3": {"name": "constant.numeric.omg.idl"}
             },
             "endCaptures": {
                 "1": {"name": "punctuation.definition.bracket.omg.idl"}
@@ -502,8 +506,17 @@
                 {"include": "#annotation_appl"},
                 {"include": "#simple_type_spec"},
                 {"include": "#array_declarator"},
-                {"include": "#template_type_spec"}
+                {"include": "#template_type_spec"},
+                {"include": "#declarator_name"}
             ]
+        },
+        "declarator_name":
+        {
+            "name": "meta.variable.field.omg.idl",
+            "match": "\\b(\\w+)\\s*;",
+            "captures": {
+                "1": {"name": "variable.field.omg.idl"}
+            }
         },
         "value_dcl": {
             "patterns": [
@@ -514,7 +527,7 @@
         "value_def": {
             "name": "meta.valuetype.omg.idl",
             "begin": "(valuetype)\\s+(\\w+)\\s*(.*)\\{",
-            "end": "\\};",
+            "end": "};",
             "beginCaptures": {
                 "1": {"name": "storage.type.class.omg.idl"},
                 "2": {"name": "entity.name.type.omg.idl"},
@@ -559,24 +572,158 @@
         "state_member": {
             "name": "meta.state_member.omg.idl",
             "begin": "\\b(public|private)\\b",
-            "end": ";",
+            "end": "$",
             "beginCaptures": {
                 "1": {"name": "storage.modifier.visibility.omg.idl"}
             },
             "patterns": [
                 {"include": "#type_spec"},
-                {"include": "#declarator"}
+                {"include": "#declarator"},
+                {"include": "#annotation_comment"}
             ]
         },
         "annotation_appl": {
             "name": "annotation.omg.idl",
             "patterns": [{
                 "name": "storage.type.annotation.omg.idl",
-                "match": "@\\w+(\\(.*\\)){0,1}"
+                "match": "@\\w+\\s*(\\(.*\\)){0,1}"
             }]
+        },
+        "interface_def": {
+            "name": "meta.storage.interface.omg.idl",
+            "begin": "(interface)\\s+(\\w+)\\s*((\\:)\\s+(\\w+)){0,1}\\s*\\{",
+            "end": "\\};",
+            "beginCaptures": {
+                "1": {"name": "storage.type.interface.omg.idl"},
+                "2": {"name": "entity.name.type.omg.idl"},
+                "5": {"name": "entity.name.type.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#interface_body"},
+                {"include": "#single_line_comments"},
+                {"include": "#block_comments"}
+            ]
+        },
+        "interface_body": {
+            "patterns": [
+                {"include": "#attr_dcl"},
+                {"include": "#op_dcl"}
+            ]
+        },
+        "op_dcl": {
+            "name": "meta.storage.operation.omg.idl",
+            "begin": "^\\s*((\\w+(<\\d+>){0,1})|\\w+::\\w+)\\s+\n*(\\w+)\\s*\\(",
+            "end": "((raises)\\s*\\(\\w+(::\\w+)*\\s*(,\\s*\\w+(::\\w+)*)*\\)){0,1};",
+            "beginCaptures": {
+                "2": {
+                    "patterns": [{"include": "#op_type_spec"}]
+                },
+                "4": {"name": "entity.name.function.omg.idl"}
+            },
+            "endCaptures": {
+                "2": {
+                    "patterns": [{"include": "#raises_keyword"}]
+                }
+            },
+            "patterns": [
+                {"include": "#type_spec"},
+                {"include": "#parameter_attribute"},
+                {"include": "#param_declarator"}]
+        },
+        "attribute_raises_keyword": {
+            "patterns": [{
+                "name": "meta.keyword.control.raises.omg.idl",
+                "match": "(\\w+){0,1}\\s*\\b(raises|setraises|getraises)\\b",
+                "captures": {
+                    "1": {"name":"variable.attribute.omg.idl"},
+                    "2": {"name": "keyword.control.raises.omg.idl"}
+                }
+            }]
+        },
+        "raises_keyword": {
+            "patterns": [{
+                "name": "keyword.control.raises.omg.idl",
+                "match": "\\b(raises|setraises|getraises)\\b"
+            }]
+        },
+        "void_type": {
+            "patterns": [{
+                "name": "storage.type.primitive.omg.idl",
+                "match": "\\b(void)\\b"
+            }]
+        },
+        "op_type_spec": {
+            "patterns": [
+                {"include": "#void_type"},
+                {"include": "#const_type"},
+                {"include": "#template_type_spec"}
+            ]
+        },
+        "parameter_attribute": {
+            "name": "storage.modifier.attribute.param.omg.idl",
+            "match": "(in|out|inout)\\b"
+        },
+        "param_attribute": {
+            "patterns": [{
+                "name": "storage.modifier.attribute.param.omg.idl",
+                "match": "\\b(in|out|inout)\\b"
+            }]
+        },
+        "param_declarator": {
+            "patterns": [{
+                "name": "meta.variable.param.omg.idl",
+                "match": "\\b(\\w+)\\b(,|\\))",
+                "captures": {
+                    "1": { "name": "variable.param.omg.idl"}
+                }
+            }]
+        },
+        "interface_forward_dcl": {
+            "name": "meta.storage.type.interface.omg.idl",
+            "match": "\\b(interface)\\b\\s*\\b(\\w+)\\b;",
+            "captures": {
+                "1": {"name": "storage.type.interface.omg.idl"},
+                "2": {"name": "entity.name.type.omg.idl"}
+            }
+        },
+        "simple_declarator": {
+            "patterns": [{
+                "include": "#identifier"
+            }]
+        },
+        "identifier": {
+            "name": "variable.other.omg.idl",
+            "match": "\\w+"
+        },
+        "attr_dcl": {
+            "name": "meta.storage.attribute.omg.idl",
+            "begin": "\\b(readonly){0,1}\\b\\s*\\b(attribute)\\b",
+            "end": "((\\w+)(\\s*,\\s*(\\w+))*){0,1}\\s*;",
+            "beginCaptures": {
+                "1": { "name": "keyword.control.readonly.omg.idl"},
+                "2": { "name": "keyword.control.attribute.omg.idl"}
+            },
+            "endCaptures": {
+                "2": { "name": "variable.attribute.omg.idl"},
+                "4": { "name": "variable.attribute.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#type_spec"},
+                {"include": "#attribute_raises_keyword"}
+            ]
+        },
+        "except_dcl": {
+            "name": "meta.storage.attribute.omg.idl",
+            "begin": "\\b(exception)\\s+(\\w+)\\b\\s*{",
+            "end": "}",
+            "beginCaptures": {
+                "1": { "name": "storage.type.exception.omg.idl"},
+                "2": { "name": "entity.name.type.omg.idl"}
+            },
+            "patterns": [
+                {"include": "#member"}
+            ]
         }
-
-
     },
     "scopeName": "source.omg.idl"
 }
