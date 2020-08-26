@@ -7,8 +7,10 @@ This extension adds syntax highlighting for a subset of the Interface Definition
 * Modules
 * Annotations
 
-![Syntax Highlighting](https://github.com/rticommunity/vscode-omg-idl/blob/master/images/hello_world_idl.png)
+![Syntax Highlighting](https://raw.githubusercontent.com/rticommunity/vscode-omg-idl/master/images/hello_world_idl.png)
 
+## Changelog
 
 ### 1.0.0
+
 First release
