@@ -1,4 +1,4 @@
-# OMG Interface Definition Language (IDL) Syntax Highlighter
+# OMG IDL Syntax Highlighter
 
 The [OMG Interface Definition Language (IDL)](https://www.omg.org/spec/IDL)
 (ISO/IEC 19516:2020) is a descriptive language used to define data types and
