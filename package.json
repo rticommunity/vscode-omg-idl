@@ -1,8 +1,8 @@
 {
-    "name": "omg-idl-lang",
+    "name": "omg-idl",
     "publisher": "RTI",
-    "displayName": "Interface Definition Lang",
-    "description": "Syntax highlighting for OMG IDL language",
+    "displayName": "OMG IDL",
+    "description": "Syntax highlighting for the OMG Interface Definition Language (IDL)",
     "version": "1.0.0",
     "engines": {
         "vscode": "^1.33.0"
@@ -11,20 +11,29 @@
         "Programming Languages"
     ],
     "contributes": {
-        "languages": [{
-            "id": "omg.idl",
-            "aliases": ["OMG IDL", "omg.idl"],
-            "extensions": [".idl"],
-            "configuration": "./language-configuration.json"
-        }],
-        "grammars": [{
-            "language": "omg.idl",
-            "scopeName": "source.omg.idl",
-            "path": "./syntaxes/omg.idl.tmLanguage.json"
-        }]
+        "languages": [
+            {
+                "id": "omg.idl",
+                "aliases": [
+                    "OMG IDL",
+                    "omg.idl"
+                ],
+                "extensions": [
+                    ".idl"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "omg.idl",
+                "scopeName": "source.omg.idl",
+                "path": "./syntaxes/omg.idl.tmLanguage.json"
+            }
+        ]
     },
     "repository": {
-      "type": "git",
-      "url": "https://github.com/rticommunity/vscode-omg-idl.git"
+        "type": "git",
+        "url": "https://github.com/rticommunity/vscode-omg-idl.git"
     }
 }
