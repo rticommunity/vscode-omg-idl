@@ -329,14 +329,6 @@
                 "match": "\\b(fixed)\\b"
             }]
         },
-        "annotation_comment": {
-            "name": "annotation.omg.idl",
-            "patterns": [{
-                "name": "storage.type.annotation.omg.idl",
-                "match": "//@\\w+.*$"
-            }]
-
-        },
         "constr_type_dcl": {
             "patterns": [
                 {"include": "#struct_dcl"},
@@ -351,7 +343,7 @@
         },
         "struct_def": {
             "name": "meta.storage.struct.omg.idl",
-            "begin": "(struct)\\s+(\\w+)\\s*((\\:)\\s+(\\w+)){0,1}\\s*\\{",
+            "begin": "(struct)\\s+(\\w+)\\s*((\\:)\\s+(\\w+)){0,1}\\s*(\\{)*",
             "end": "\\}",
             "beginCaptures": {
                 "1": {"name": "storage.type.class.omg.idl"},
