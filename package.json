@@ -4,6 +4,7 @@
     "displayName": "OMG IDL",
     "description": "Syntax highlighting for the OMG Interface Definition Language (IDL)",
     "version": "1.0.0",
+    "icon": "images/icon.png",
     "engines": {
         "vscode": "^1.33.0"
     },
