@@ -47,7 +47,7 @@
         },
         "module_dcl": {
             "name": "meta.module.omg.idl",
-            "begin": "\\s*(module)\\s+(\\w+)\\s*(\\{)",
+            "begin": "\\s*(module)\\s+(\\w+)\\s*(\\{){0,1}",
             "end": "\\}",
             "beginCaptures": {
                 "1": { "name": "keyword.control.omg.idl"},
@@ -343,7 +343,7 @@
         },
         "struct_def": {
             "name": "meta.storage.struct.omg.idl",
-            "begin": "(struct)\\s+(\\w+)\\s*((\\:)\\s+(\\w+)){0,1}\\s*(\\{)*",
+            "begin": "(struct)\\s+(\\w+)\\s*((\\:)\\s+(\\w+)){0,1}\\s*(\\{){0,1}",
             "end": "\\}",
             "beginCaptures": {
                 "1": {"name": "storage.type.class.omg.idl"},
@@ -377,7 +377,7 @@
         },
         "union_def": {
             "name": "meta.storage.union.omg.idl",
-            "begin": "(union)\\s+(\\w+)\\s+(switch)\\s*\\((\\w+)\\)\\s*\\{",
+            "begin": "(union)\\s+(\\w+)\\s+(switch)\\s*\\((\\w+)\\)\\s*(\\{){0,1}",
             "end": "\\};",
             "beginCaptures": {
                 "1": {"name": "storage.type.union.omg.idl"},
@@ -431,7 +431,7 @@
         },
         "enum_dcl": {
             "name": "meta.enum.omg.idl",
-            "begin": "\\b(enum)\\b\\s+(\\w+)\\s*\\{",
+            "begin": "\\b(enum)\\b\\s+(\\w+)\\s*(\\{){0,1}",
             "end": "}",
             "beginCaptures": {
                 "1": {"name": "storage.type.enum.omg.idl"},
@@ -518,7 +518,7 @@
         },
         "value_def": {
             "name": "meta.valuetype.omg.idl",
-            "begin": "(valuetype)\\s+(\\w+)\\s*(.*)\\{",
+            "begin": "(valuetype)\\s+(\\w+)\\s*(.*)(\\{){0,1}",
             "end": "};",
             "beginCaptures": {
                 "1": {"name": "storage.type.class.omg.idl"},
@@ -583,7 +583,7 @@
         },
         "interface_def": {
             "name": "meta.storage.interface.omg.idl",
-            "begin": "(interface)\\s+(\\w+)\\s*((\\:)\\s+(\\w+)){0,1}\\s*\\{",
+            "begin": "(interface)\\s+(\\w+)\\s*((\\:)\\s+(\\w+)){0,1}\\s*(\\{){0,1}",
             "end": "\\};",
             "beginCaptures": {
                 "1": {"name": "storage.type.interface.omg.idl"},
