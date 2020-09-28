@@ -17,6 +17,10 @@ including most of the rules from the following building blocks:
 
 ## Release Notes
 
+### 1.0.1
+
+Minor bug fixes.
+
 ### 1.0.0
 
-First release
+First release.

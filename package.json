@@ -3,7 +3,7 @@
     "publisher": "RTI",
     "displayName": "OMG IDL",
     "description": "Syntax highlighting for the OMG Interface Definition Language (IDL)",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "icon": "images/icon.png",
     "engines": {
         "vscode": "^1.33.0"
